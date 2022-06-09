@@ -1,5 +1,5 @@
 # Treegen
-Random Tree Generator program in Java
+Random Tree Generator program in Java, created with Eclipse.
 
 Download in releases!
 
