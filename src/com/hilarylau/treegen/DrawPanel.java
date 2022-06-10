@@ -1,25 +1,23 @@
 package com.hilarylau.treegen;
 
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Random;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-public class DrawPanel extends JPanel implements ActionListener {
+public class DrawPanel extends JPanel {
 	
 	private static final long serialVersionUID = 908925503915443172L;
+	double prob = 0.8;
+	int maxS = 700;
+	int minS = 500;
+	JTextField branchProb;
 
 	@Override
 	public void paint(Graphics g) {
+		// clear the whole panel
 		super.paint(g);
-		// add button
-		JButton regenerateButton = new JButton("Regenerate");
-		regenerateButton.setActionCommand("regenerate");
-		regenerateButton.addActionListener(this);
-		this.add(regenerateButton);
 		// begin recursive drawing
 		this.drawVector(g, new LineVector(375, 750, 375, 525));
 	}
@@ -49,7 +47,7 @@ public class DrawPanel extends JPanel implements ActionListener {
 		int y1 = vector.y2;
 		// randomize scale factor
 		Random r = new Random();
-		int n = r.nextInt(700 - 500 + 1) + 500;
+		int n = r.nextInt(maxS - minS + 1) + minS;
 		double scaleFactor = n / 1000.0;
 		// extend vector to find final point
 		double tempX2 = x1 + (x1 - vector.x1) / length * (length * scaleFactor);
@@ -70,7 +68,7 @@ public class DrawPanel extends JPanel implements ActionListener {
 		LineVector posVector2 = transformCoordinatesPos(vector);
 		LineVector negVector = transformCoordinatesNeg(vector);
 		LineVector negVector2 = transformCoordinatesNeg(vector);
-		if (vector.distance() > 4) { // End Condition when branch length is shorter than 4 pixels
+		if (vector.distance() > 5) { // End Condition when branch length is shorter than 4 pixels
 			// call function again to recurse
 			this.drawVector(g, posVector);
 			this.drawVector(g, negVector);
@@ -83,14 +81,9 @@ public class DrawPanel extends JPanel implements ActionListener {
 		}
 	}
 	
-	// regenerate tree when the button is clicked
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		this.repaint();
-	} 
-	
 	public boolean branchAppearing(){
-	    return Math.random() < 0.8; // probability of branch appearing is 0.8
+		System.out.println(prob);
+	    return Math.random() < prob; // probability of branch appearing is 0.8
 	}
 	
 }
