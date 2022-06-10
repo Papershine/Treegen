@@ -82,7 +82,6 @@ public class DrawPanel extends JPanel {
 	}
 	
 	public boolean branchAppearing(){
-		System.out.println(prob);
 	    return Math.random() < prob; // probability of branch appearing is 0.8
 	}
 	
